@@ -1,0 +1,88 @@
+#
+# Copyright (2007) Sandia Corporation. Under the terms of Contract DE-AC04-94AL85000
+# with Sandia Corporation, the U.S. Government retains certain rights in this software.
+#
+# An example of a configuration file for Seshat
+# $Id: config.example,v 1.7 2007/11/21 22:15:27 rolf Exp $
+# Rolf Riesen (rolf@sandia.gov), June 2006, Sandia National Laboratories
+#
+# By default, the simulator looks for a file called scs_conf in the current directory.
+# You can change that by setting the environment variable SCS_CONF_FILE_NAME to another file name
+
+
+
+# ==================================================================================================
+#
+# General info
+
+# - Anything starting with a # to the end of line is ignored
+# - Blank lines are ignored
+# - keywords and arguments are separated by white space
+# - keywords and arguments are case sensitive
+# - Can't have white space in file names
+# - space and tabs are considered white space
+# - adjacent white space is the same as a single space
+#
+
+
+
+# ==================================================================================================
+#
+# Debug options to help testing the simulator
+# By default all these options are off
+
+# debug config		# Info about processing the configuration file
+# debug process         # Info about starting the application
+# debug mpi		# Generic info about MPI
+# debug mpi2		# Info about all application calls to MPI
+# debug mpi3		# Info about non-C MPI calls; e.g. Fortran
+# debug mpiint		# Info about simulator internal use of MPI; e.g. transmitting events
+# debug event		# Info about event processing
+# debug emu		# Emulator related info
+# debug net		# Network simulator info
+# debug time		# Debugging virtual time
+# debug req		# Debugging tracing requests across non-blocking calls
+# debug all		# All of the above options combined
+
+# debug_file <file>	# Put debug output into <file>. Can be stderr or stdout instead of
+			# a file name. Default is stderr
+
+
+
+# ==================================================================================================
+#
+# Simulation data output files
+# Valid file names include stdout and stderr to redirect output to those file descriptors
+# If a given output file is not specified, then that data will not be written. Also,
+# the option net_reporting (below) must be set to true for information to be written.
+
+# vtime_file <file>	# Virtual time statistics.
+# mdd_file <file>	# Message density data array.
+# ddd_file <file>	# Data density array.
+# col_file <file>	# Collective data info.
+# p2p_file <file>	# Point-to-point vs. collective data info.
+# msize_file <file>	# Message size info.
+
+
+
+# ==================================================================================================
+#
+# Parameters for the network simulator
+
+# net_bw_factor 1.0	# Bandwidth multiplication factor. Default is 1.0
+# net_lat_factor 1.0	# Latency multiplication factor. Default is 1.0
+# net_coll_factor 1.0	# Collectives multiplication factor. Default is 1.0
+# net_cpu_factor 1.0	# Time adjustment between MPI calls. Default is 1.0
+# net_reporting yes	# Default is no. Can be: yes, on, 1, no, off, 0
+# mpi_long_proto 131072	# Cross-over point to long MPI protocol. default >= 128k
+# sim_sleep 0		# Default is 0. Let sim sleep that many nanoseconds at each event
+
+
+
+# ==================================================================================================
+#
+# Trace file
+# Valid file names include stdout and stderr to redirect output to those file descriptors
+# If a no trace file is specified, then that data will not be written.
+
+# trace_file <file>	# Name of file to write trace data to

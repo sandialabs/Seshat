@@ -1,0 +1,48 @@
+    - Find out what other MPI functions are expensive and call MPI_entry for them.
+
+    - Need to fix timing for collectives
+    - Need to fix collectives like p2p and use token
+    - Deal better with wildcard receives. May need to look at events first and then
+	do a non-wildcard receive.
+    - On machines with more than one node per board, the simulator thinks 0 and 1
+	are on one board, 2 and 3 are on the next board, and so on. On Redstorm this
+	is only true if the -VN switch is used on the yod command line. The simulator
+	cannot really know how it was started...
+    - Close trace and data files when simulation finishes
+    - _scs_abort() doesn't actually abort in all cases
+    - Is *.msize.out wrong? Make sure it counts into the right buckets
+    - When app uses sub-communicator, forwarding through net sim doesn't work
+
+    - Writing of message body data in collectives is wrong. Either get rid of this,
+        or fix it.
+    - The data amount written by _scs_event_exchange may not be correct, if calls to
+        functions like mpi_gatherv_ send and receive different amount of information.
+        This could be fixed by passing the recvlength into _scs_event_exchange as well.
+
+Resolved:
+    - I think I can get rid of the tag and source arguments in _scs_event_wait()
+        * No, I cannot because the collectives use it with src and tag. I may
+            be able to resolve that -> No task above
+
+    - OpenMPI pmpi_irecv_ calls MPI_Irecv
+        That means we handle it like two seperate messages...
+        A solution would be to have the Fortran wrappers always call my C routines,
+        instead of the pmpi_*_() calls.
+
+        * Now the C and Fortran API call the internal wrap_MPI_* functions
+
+    - Do I need token for the _scs_req_ functions?
+        * Yes. Done.
+
+    - Make collectives use token to wait for events, so I can get rid of src and tag
+        in _scs_event_wait()
+
+        * Done. May need something more than COLL_TOKEN at a later time.
+
+    - Implement MPI_Test
+        * Done. Just let it go through.
+
+    - All SCS communications (events) must be done in a separate context to avoid
+        interference with the application.
+
+        * I'm doing that: I am using a separate communicator

@@ -1,0 +1,19 @@
+Files
+-----
+    scs_mpi_internal.c
+	Contains wrappers for the MPI calls the simulator uses internally. They are
+	names _scs_MPI_*; e.g., _scs_MPI_Send
+	DBG_MPI_INTERNAL can be used to show calls to these functions
+	They call the corresponding PMPI_* functions directly.
+
+    scs_mpi_wrappers.c
+	Here are some support functions the MPI wrappers need plus the MPI
+	function wrappers that are more complicated than just updating the
+	local virtual time.
+
+    scs_mpi_wrappersC.c
+	The C language wrappers. Most of them change the communicator to the
+	one the app uses. Some also send and wait for events.
+
+    scs_mpi_wrappersF.c
+	Same as above, but for Fortran.
